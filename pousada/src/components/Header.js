@@ -19,6 +19,7 @@ function Header(){
 
         <div>
 
+<link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
 
 <nav className="navbar navbar-expand-lg  bg-body-tertiary" style={{background:'#87CEEB'}}>
@@ -43,7 +44,7 @@ function Header(){
       <a className="navbar-brand mt-2 mt-lg-0" href="#">
         <img
           src={Logo}
-          height="38"
+          width="70"
           alt="Pousada Bom Descanso"
           loading="lazy"
         />
@@ -51,27 +52,27 @@ function Header(){
     
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <a className="nav-link">
+          <a className="nav-link lni lni-home">
 
-           <Link to="/home" style={link}><strong>Home</strong></Link>
+           <Link to="/home" style={link}><strong>Início</strong></Link>
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link text-white" > 
+          <a className="nav-link lni lni-users" > 
             
           <Link to="/usuarios" style={link}><strong>Usuários</strong></Link>
           
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link text-white" > 
+          <a className="nav-link lni lni-layers" > 
             
           <Link to="/produtos/1" style={link}><strong>Produtos</strong></Link>
           
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link text-white" > 
+          <a className="nav-link lni lni-list" > 
             
           <Link to="/categorias" style={link}><strong>Categorias</strong></Link>
           
@@ -84,7 +85,7 @@ function Header(){
 
     <ul className="navbar-nav d-flex flex-row me-1">
             <li className="nav-item me-3 me-lg-0">
-                <a className="nav-link" >Administrador</a>
+                <a className="nav-link" >Bem-vindo ADM</a>
             </li>
             <li className="nav-item me-3 me-lg-0">
                 <a className="nav-link" ><i className="fas fa-right-to-bracket fa-x2"></i> <Link to="/" style={link}><strong>Sair</strong></Link></a>

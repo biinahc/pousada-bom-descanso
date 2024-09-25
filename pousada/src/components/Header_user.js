@@ -19,6 +19,7 @@ function Header_user() {
 
     <div>
 
+<link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
 
       <nav className="navbar navbar-expand-lg  bg-body-tertiary" style={{ background: '#87CEEB' }}>
@@ -43,7 +44,7 @@ function Header_user() {
             <a className="navbar-brand mt-2 mt-lg-0" href="#">
               <img
                 src={Logo}
-                height="38"
+                height="60"
                 alt="Pousada Bom Descanso"
                 loading="lazy"
               />
@@ -51,14 +52,14 @@ function Header_user() {
 
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link">
+                <a className="nav-link lni lni-home">
 
-                  <Link to="/home_user" style={link}><strong>Home</strong></Link>
+                  <Link to="/home_user" style={link}><strong>Início</strong></Link>
                 </a>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link text-white" >
+                <a className="nav-link lni lni-layers" >
 
                   <Link to="/produtos/''" style={link}><strong>Produtos</strong></Link>
 
@@ -71,8 +72,10 @@ function Header_user() {
           </div>
 
           <ul className="navbar-nav d-flex flex-row me-1">
+            <a className="nav-link mb-15 me-lg-5" >Bem-vindo! </a>
             <li className="nav-item me-3 me-lg-0">
               <a className="nav-link" ><i className="fas fa-right-to-bracket fa-x2"></i> <Link to="/" style={link}><strong>Sair</strong></Link></a>
+              
             </li>
             <li className="nav-item me-3 me-lg-0">
               <a className="nav-link text-white" > </a>

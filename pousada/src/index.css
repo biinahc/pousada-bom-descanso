@@ -11,3 +11,68 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.login {
+  background-image: url("./components/pousada\ bom\ descanso.jpg");
+  height: 100vh;
+  width: 100%;
+  max-width: 8000px;
+  margin: 0 auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+
+}
+
+h1 {
+  font-style: italic;
+  font-size: 320%;
+  font-family:'Times New Roman', Times, serif;
+
+}
+
+form {
+  width:100%;
+  box-shadow: 5vh 5vh 100px rgba(238, 54, 54, 0.8);
+  background-color: rgba(245, 245, 220, 0.636);
+  opacity: 99% ;
+}
+
+.form-control {
+  box-shadow: 0 0 10px rgba(216, 42, 19, 0.862);
+}
+
+.text1{
+  font-family: cursive;
+
+}
+
+.homeuser {
+  background-image: url("./components/img\ fundo.jpg");
+  height: 100vh;
+  width: 100%;
+  max-width: 6000px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+ 
+ 
+}
+
+.home {
+  background-image: url("./components/img\ fundo.jpg");
+  height: 100vh;
+  width: 100%;
+  max-width: 6000px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+
+.text2{
+  font-family: cursive;
+
+}
