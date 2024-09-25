@@ -10,7 +10,7 @@ import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import { Tag } from 'primereact/tag';   
+import { Tag } from 'primereact/tag';
 import { Dropdown } from 'primereact/dropdown';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -26,6 +26,7 @@ export default function ProductsDemo() {
         id: null,
         name: '',
         senha: '',
+        perfil: '',
         status: null
     };
 
@@ -43,16 +44,21 @@ export default function ProductsDemo() {
     const status_user = [
         { name: 'Activo', value: 'Activo' },
         { name: 'Inativo', value: 'Inativo' }
-
-       
     ];
 
-     useEffect(() => {
-      axios.get('http://localhost:8080/users')
-      .then(response => setProducts(response.data));
-   }, [product]);
+    const perfil_user = [
+        { name: 'Admin', value: 'Admin' },
+        { name: 'Usuario', value: 'Usuario' }
 
-     
+
+    ];
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/users')
+            .then(response => setProducts(response.data));
+    }, [product]);
+
+
 
     const openNew = () => {
         setProduct(emptyProduct);
@@ -83,98 +89,94 @@ export default function ProductsDemo() {
             console.log(_product);
 
             if (product.id) {
-               axios.put('http://localhost:8080/users/update/'+product.id,_product)
-                .then(response => {
-                  {/*console.log(_product);*/}
-                  toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuario Atualizado', life: 3000 });
-                })
-                .catch(error => {
-                  console.log(error);
-                });
-               
+                axios.put('http://localhost:8080/users/update/' + product.id, _product)
+                    .then(response => {
+                        {/*console.log(_product);*/ }
+                        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuario Atualizado', life: 3000 });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
             } else {
-               axios.post('http://localhost:8080/users/create',_product)
-              .then(response => {
-                {/*console.log(_product);*/}
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuario criado', life: 3000 });
-              })
-              .catch(error => {
-                console.log(error);
-              });
-               
-                
+                axios.post('http://localhost:8080/users/create', _product)
+                    .then(response => {
+                        {/*console.log(_product);*/ }
+                        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuario criado', life: 3000 });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
+
             }
 
             setProducts(_products);
             setProductDialog(false);
             setProduct(emptyProduct);
-        
-            
+
+
         }
 
-     
+
     };
 
     const editProduct = (product) => {
         setProduct({ ...product });
         setProductDialog(true);
+
     };
 
     const confirmDeleteProduct = (product) => {
         setProduct(product);
         setDeleteProductDialog(true);
-       
+
     };
 
     const deleteProduct = () => {
-     
-         let _product = { ...product };
-        
-          {/* console.log(_product.id);*/}
 
-         {/*setProducts(_products);
-        setDeleteProductDialog(false);
-        setProduct(emptyProduct);*/}
+        let _product = { ...product };
 
-        axios.delete('http://localhost:8080/users/'+_product.id )
-        .then(response => {
-        
-          toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuario excluido', life: 3000 });
-        })
-        .catch(error => {
-          console.log(error);
-        });
+
+        axios.delete('http://localhost:8080/users/' + _product.id)
+            .then(response => {
+
+                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuario excluido', life: 3000 });
+            })
+            .catch(error => {
+                console.log(error);
+            });
 
         setDeleteProductDialog(false);
         setProduct(emptyProduct);
         setProduct(_product);
-   
-       
+
+
     };
 
 
-  const deleteSelectedProducts = () => {
+    const deleteSelectedProducts = () => {
         let ids = [];
-        ids =  selectedProducts.map(item => (item.id))
+        ids = selectedProducts.map(item => (item.id))
 
 
         axios.delete('http://localhost:8080/items/users', { data: { ids: ids } })
-      .then(response => {
+            .then(response => {
 
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuarios excluidos', life: 3000 });
- 
-      })
-      .catch(error => console.error(error));
+                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuarios excluidos', life: 3000 });
 
-      setDeleteProductsDialog(false);
-      setSelectedProducts(null);
-      setProduct(emptyProduct);
-     
+            })
+            .catch(error => console.error(error));
 
-     };  
-       
+        setDeleteProductsDialog(false);
+        setSelectedProducts(null);
+        setProduct(emptyProduct);
 
- 
+
+    };
+
+
+
     const exportCSV = () => {
         dt.current.exportCSV();
     };
@@ -194,14 +196,14 @@ export default function ProductsDemo() {
     };
 
 
- 
+
 
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
                 <Button className="btn btn-outline-success btn-lg" label="Criar" icon="pi pi-plus" severity="success" onClick={openNew} />
                 &nbsp;  &nbsp;  &nbsp;  &nbsp;
-                <Button className="btn btn-outline-danger btn-lg" label="Delete" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
+                <Button className="btn btn-outline-danger btn-lg" label="Deletar" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
             </div>
         );
     };
@@ -211,13 +213,13 @@ export default function ProductsDemo() {
     };
 
     const centerToolbarTemplate = () => {
-        return   <h4 class="display-6">Usuarios   <i class="fas fa-users"></i></h4>
+        return <h4 class="display-6">Usuários   <i class="fas fa-users"></i></h4>
     };
 
     const actionBodyTemplate = (product) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil"  rounded outlined className=" btn btn-outline-info btn-sm" onClick={() => editProduct(product)} />
+                <Button icon="pi pi-pencil" rounded outlined className=" btn btn-outline-info btn-sm" onClick={() => editProduct(product)} />
                 &nbsp;
                 <Button icon="pi pi-trash" rounded outlined severity="danger" className=" btn btn-outline-danger btn-sm" onClick={() => confirmDeleteProduct(product)} />
             </React.Fragment>
@@ -245,13 +247,13 @@ export default function ProductsDemo() {
 
     const header = (
         <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-            
-            
+
+
             <IconField iconPosition="left" >
                 <InputIcon className="pi pi-search" />
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..." />
             </IconField>
-            
+
         </div>
     );
     const productDialogFooter = (
@@ -270,9 +272,9 @@ export default function ProductsDemo() {
     );
     const deleteProductsDialogFooter = (
         <React.Fragment>
-            <Button label="Não" className="btn btn-outline-danger btn-sm"  icon="pi pi-times" outlined onClick={hideDeleteProductsDialog} />
+            <Button label="Não" className="btn btn-outline-danger btn-sm" icon="pi pi-times" outlined onClick={hideDeleteProductsDialog} />
             &nbsp;
-            <Button label="Sim" className="btn btn-outline-success btn-sm"  icon="pi pi-check" severity="danger" onClick={deleteSelectedProducts} />
+            <Button label="Sim" className="btn btn-outline-success btn-sm" icon="pi pi-check" severity="danger" onClick={deleteSelectedProducts} />
         </React.Fragment>
     );
 
@@ -280,44 +282,45 @@ export default function ProductsDemo() {
         margin: "auto",
         padding: "15px",
         width: "1220px",
-     };
+    };
 
     return (
-     <div>
-         <Header/>
-        <br/>
+        <div>
+            <Header />
+            <br />
 
-       
-        
-    <div style={dataTable}>
-       <Toast ref={toast} />
-         <div className="card">
-             <Toolbar className="mb-4" left={leftToolbarTemplate} center={centerToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
-    
-             <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
-                        dataKey="id"  paginator rows={8} rowsPerPageOptions={[5, 10, 25]} className="datatable-responsive"
+
+
+            <div style={dataTable}>
+                <Toast ref={toast} />
+                <div className="card">
+                    <Toolbar className="mb-4" left={leftToolbarTemplate} center={centerToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+
+                    <DataTable ref={dt} value={products} selection={selectedProducts} stripedRows onSelectionChange={(e) => setSelectedProducts(e.value)}
+                        dataKey="id" paginator rows={8} rowsPerPageOptions={[5, 10, 25]} className="datatable-responsive"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
-                    <Column selectionMode="multiple" exportable={false}></Column>
-                    <Column field="id" header="#" sortable style={{ minWidth: '8rem' }}></Column>
-                    <Column field="name" header="Usuario" sortable style={{ minWidth: '8rem' }}></Column>
-                    <Column field="senha" header="senha" sortable style={{ minWidth: '8rem' }}></Column>
-                    <Column field="createdAt" header="Criado" sortable style={{ minWidth: '8rem' }}></Column>
-                    <Column field="updatedAt" header="Editado"sortable style={{ minWidth: '8rem' }}></Column>
-                    <Column field="status" header="Status"  body={statusBodyTemplate} sortable style={{ minWidth: '7rem' }}></Column>
-                    <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '9rem' }}></Column>
-                </DataTable>
-    
-    </div>
-</div>   
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header} scrollable scrollHeight="400px" >
+                        <Column selectionMode="multiple" exportable={false}></Column>
+                        <Column field="id" header="#" sortable style={{ minWidth: '8rem' }}></Column>
+                        <Column field="name" header="Usuario" sortable style={{ minWidth: '8rem' }}></Column>
+                        <Column field="senha" header="senha" sortable style={{ minWidth: '8rem' }}></Column>
+                        <Column field="createdAt" header="Criado" sortable style={{ minWidth: '8rem' }}></Column>
+                        <Column field="updatedAt" header="Editado" sortable style={{ minWidth: '8rem' }}></Column>
+                        <Column field="status" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '7rem' }}></Column>
+                        <Column field="perfil" header="Perfil" sortable style={{ minWidth: '8rem' }}></Column>
+                        <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '9rem' }}></Column>
+                    </DataTable>
 
-<h1>{product.name}</h1>
-{/************************************************************** MODALES ***************************************************************** */}
+                </div>
+            </div>
+
+            <h1>{product.name}</h1>
+            {/************************************************************** MODALES ***************************************************************** */}
 
 
             <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Usuario" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                
-         
+
+
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
                         Nome de usuario
@@ -325,22 +328,32 @@ export default function ProductsDemo() {
                     <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} />
                     {submitted && !product.name && <small className="p-error">Nome é obligatorio.</small>}
                 </div>
-              <div className="field">
+                <div className="field">
                     <label htmlFor="senha" className="font-bold">
-                       Senha
+                        Senha
                     </label>
                     <InputText id="senha" value={product.senha} onChange={(e) => onInputChange(e, 'senha')} required rows={2} cols={20} />
                 </div>
 
                 <div className="field">
                     <label htmlFor="senha" className="font-bold">
-                       Status
+                        Status
                     </label>
-                        <Dropdown className="w-full md:w-14rem" id="status"  options={status_user} optionLabel="name"  value={product.status} onChange={(e) => onInputChange(e, 'status')} 
-                        
-                     />
+                    <Dropdown className="w-full md:w-14rem" id="status" options={status_user} optionLabel="name" value={product.status} onChange={(e) => onInputChange(e, 'status')}
+
+                    />
                 </div>
-            
+
+
+                <div className="field">
+                    <label htmlFor="perfil" className="font-bold">
+                        Perfil
+                    </label>
+                    <Dropdown className="w-full md:w-14rem" id="perfil" options={perfil_user} optionLabel="name" value={product.perfil} onChange={(e) => onInputChange(e, 'perfil')}
+
+                    />
+                </div>
+
             </Dialog>
 
             <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirmar" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
@@ -360,9 +373,8 @@ export default function ProductsDemo() {
                     {product && <span>Tem certeza de que quer excluir os usuarios seleccionados?</span>}
                 </div>
             </Dialog>
-        
-          
+
+            <Footer />
         </div>
     );
 }
-        

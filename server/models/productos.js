@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     tipo_producto: DataTypes.STRING,
     nome: DataTypes.STRING,
     quantidade: DataTypes.INTEGER,
+    quantidade_minima: DataTypes.INTEGER,
     lt_kl_unid: DataTypes.STRING,
     marca: DataTypes.STRING,
     status: DataTypes.INTEGER,
