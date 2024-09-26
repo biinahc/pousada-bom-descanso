@@ -213,6 +213,7 @@ function Categorias() {
 
     <div>
       <Header />
+     <Toast ref={toast} />
      
 
       <br />
@@ -224,7 +225,7 @@ function Categorias() {
 
 
         <div className="row justify">
-        <Toast ref={toast} />
+    
 
           <div className="col-sm-4">
             <div className="card">
