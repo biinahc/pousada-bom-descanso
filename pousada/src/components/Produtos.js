@@ -365,9 +365,9 @@ export default function Produtos(onAdmin) {
 
     return (
         <div>
-           <Toast ref={toast} />
+           
             {flag === '1' ? <Header /> : <Header_user />}
-
+             <Toast ref={toast} />
             <br />
 
             <div style={dataTable}>
