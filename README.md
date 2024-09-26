@@ -16,7 +16,7 @@
             
             Caso de error no momento que for correr esse projeto, instale dentro da pasta server 
             
-            npm i react-scripts
+            npm i react-scripts // Na pasta pousada
             npm i bcrypt
             npm i bcryptjs
             
