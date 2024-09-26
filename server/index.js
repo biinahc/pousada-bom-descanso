@@ -8,6 +8,7 @@ const CategoriaModel = require('./models/categorias');
 const ParametrosModel = require('./models/status_parametros');
 const { Sequelize, DataTypes } = require('sequelize');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 
 
 app.use(cors())
@@ -42,23 +43,32 @@ const parametros = ParametrosModel(sequelize, DataTypes)
 
 app.post('/login', async (req, res) => {
   const { name, senha } = req.body;
-  try {
-    const user = await users.findOne({ where: { name, senha } });
-    
-   if (user && user.status === 'Activo' && user.perfil === 'Admin') {
-      res.status(200).json({ success: true, message: 'Login com sucesso e Admin' });
 
-    }else if(user && user.status === 'Activo' && user.perfil === 'Usuario'){
-      res.status(202).json({ error: true, message: 'Usuario' });
+  const user = await users.findOne({ where: { name } });
 
-      }else if(user && user.status === 'Inativo'){
-      res.status(401).json({ error: true, message: 'Usuario Inativo' });
+  if (!user) {
+    return res.status(404).json({ message: 'Usuario não encontrado' });
+  }
 
-      }else{
-      res.status(404).json({ error: true, message: 'Usuario ou senha incorrecta' });
-      }
+ try {
+   const match = await bcrypt.compare(senha, user.senha);
 
+   if (!match) {
+    res.status(403).json({ success: true, message: 'Senha incorreta' });
 
+  }else if(match && user.status === 'Activo' && user.perfil === 'Admin'){
+    res.status(200).json({ success: true, message: 'Login com sucesso e Admin' });
+
+  }else if(match && user.status === 'Activo' && user.perfil === 'Usuario'){
+    res.status(202).json({ error: true, message: 'Login com sucesso e Usuario' });
+
+    }else if(match && user.status === 'Inativo'){
+    res.status(401).json({ error: true, message: 'Usuario Inativo' });
+
+    }
+  
+
+  
   } catch (error) {
     res.status(500).send('Error during login');
   }
@@ -81,8 +91,13 @@ app.get('/users/:id', async (req, res) => {
 });
 
 app.post('/users/create', async (req, res) => {
-  const user = await users.create(req.body);
-  res.json(user);
+  const {name, senha, status, perfil} = req.body;
+  const saltRounds = 1; // Puedes ajustar el número de rondas de sal
+  const hashedPassword = await bcrypt.hash(senha, saltRounds);
+
+  await users.create({ name, senha:hashedPassword, status, perfil });
+  //const User = await users.create({ nome, senha:hashedPassword, status, perfil });
+  res.json(name);
 
 });
 
@@ -97,6 +112,24 @@ app.put('/users/update/:id', async (req, res) => {
   }
 });
 
+
+app.put('/senha/update/:id', async (req, res) => {
+  
+  const {senha} = req.body;
+  const saltRounds = 1;
+  const novoPassword = await bcrypt.hash(senha, saltRounds);
+
+  const user = await users.findByPk(req.params.id);
+
+ if (user) {
+    user.senha = novoPassword;
+    await user.save();
+    res.json(novoPassword);
+
+  } else {
+    res.status(404).json({ message: 'Usuario não encontrado' });
+  }
+});
 
 
 app.delete('/users/:id', async (req, res) => {
@@ -148,8 +181,28 @@ app.get('/produtos/:id', async (req, res) => {
 });
 
 app.post('/produtos/create', async (req, res) => {
-  const product = await produtos.create(req.body);
-  res.json(product);
+  const {lt_kl_unid, marca, nome, quantidade, quantidade_minima,tipo_producto} = req.body;
+
+    // Capitalizar solo la primera letra 
+    const capitalizeFirstLetter = (string) => {
+      if (!string) return '';
+      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    };
+
+    // Función para eliminar acentos
+    const removeAccents = (string) => {
+      return string
+          .normalize('NFD') // Normaliza el string
+          .replace(/[\u0300-\u036f]/g, ''); // Elimina los caracteres de acento
+    };
+  const marcaSemacentos = removeAccents(marca);
+  const upperMarca = capitalizeFirstLetter(marcaSemacentos);
+  const nomeSemacentos = removeAccents(marca);
+  const upperNome = capitalizeFirstLetter(nomeSemacentos);
+
+  await produtos.create({ lt_kl_unid, marca:upperMarca, nome:upperNome, quantidade, quantidade_minima,tipo_producto});
+ /* const product = await produtos.create(req.body);*/
+  res.json(marca);
 
 });
 
