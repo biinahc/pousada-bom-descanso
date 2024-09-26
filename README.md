@@ -17,8 +17,8 @@
             Caso de error no momento que for correr esse projeto, instale dentro da pasta server 
             
             npm i react-scripts // Na pasta pousada
-            npm i bcrypt
-            npm i bcryptjs
+            npm i bcrypt    //Na pasta server
+            npm i bcryptjs  //Na pasta server
             
 
 ![Resposive](https://github.com/user-attachments/assets/044e266e-d586-42c7-8c51-af58d0b323fe)
