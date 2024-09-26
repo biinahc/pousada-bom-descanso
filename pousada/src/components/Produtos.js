@@ -365,13 +365,13 @@ export default function Produtos(onAdmin) {
 
     return (
         <div>
-
+           <Toast ref={toast} />
             {flag === '1' ? <Header /> : <Header_user />}
 
             <br />
 
             <div style={dataTable}>
-                <Toast ref={toast} />
+               
                 <div className="card">
                     <Toolbar className="mb-4" left={leftToolbarTemplate} center={centerToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
