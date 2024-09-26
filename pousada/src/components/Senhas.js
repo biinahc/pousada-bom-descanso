@@ -162,7 +162,7 @@ function Senhas() {
 
         <div>
             <Header />
-         
+             <Toast ref={toast} />
 
             <br />
             <br />
@@ -173,7 +173,7 @@ function Senhas() {
 
 
                 <div className="row justify">
-                    <Toast ref={toast} />
+                   
 
                     <div className="col-sm-4">
                         <div className="card">
