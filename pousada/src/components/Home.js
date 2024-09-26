@@ -7,10 +7,6 @@ import axios from 'axios';
 
 
 
-
-
-
-
 function Home() {
   const [chartData, setChartData] = useState({});
   const [produtos, setProdutos] = useState([]);
@@ -110,25 +106,25 @@ function Home() {
 
 
 
-      <div className="home container text-center">
+      <div className="container text-center">
 
 
 
-        <div className="row">
+        <div className="row justify">
 
-          <div className="col-2">
+          <div className="col-sm-2">
             <div className="card">
               <div className="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
-                <img src="https://as2.ftcdn.net/v2/jpg/06/24/33/91/1000_F_624339153_zyidXmC8A8yJMwql04TP92xWXOEHLIrK.jpg" className="img-fluid" />
+                <img src="https://media.istockphoto.com/id/1147449038/photo/internet-communication-and-data-exchanges-global-network-structure.jpg?b=1&s=612x612&w=0&k=20&c=WCWsX82X5qbnkHIqgC0Q8Q83aoA6NxRf8UEFzrGr578=" className="img-fluid" />
                 <a href="#!">
                   <div className="mask" style={{ background: '#87CEEB' }}></div>
                 </a>
               </div>
               <div className="card-body">
-                <h6 className="card-title">Usuários</h6>
+                <h6 className="card-title">Administrar</h6>
                 <p className="card-text"></p>
-                <a className="btn btn-info btn-md" data-mdb-ripple-init>
-                  <Link to="/usuarios" style={link}>Gerênciar</Link>
+                <a className="btn btn-info btn-sm" data-mdb-ripple-init>
+                  <Link to="/usuarios" style={link}> Usuários</Link>
                 </a>
               </div>
             </div>
@@ -137,32 +133,60 @@ function Home() {
 
             <div className="card">
               <div className="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
-                <img src="https://blog.pontte.com.br/wp-content/uploads/2022/08/giro-de-estoque.jpg" className="img-fluid" />
+                <img src="https://media.istockphoto.com/id/1195741045/pt/foto/technician-using-digital-tablet-while-working-in-the-production-line-of-a-factory-checking.jpg?s=612x612&w=0&k=20&c=3ql0nbl8byATlrExwwU9VQhKId2wGcZQfDUsi4rdwZQ=" className="img-fluid" />
                 <a href="#!">
                   <div className="mask" style={{ background: '#87CEEB' }}></div>
                 </a>
               </div>
               <div className="card-body">
-                <h6 className="card-title">Produtos</h6>
+                <h6 className="card-title">Administrar</h6>
                 <p className="card-text"></p>
-                <a href="#!" className="btn btn-info btn-md" data-mdb-ripple-init><Link to="/produtos/1" style={link}>Gerênciar</Link></a>
+                <a href="#!" className="btn btn-info btn-sm" data-mdb-ripple-init><Link to="/produtos/1" style={link}> Produtos</Link></a>
               </div>
             </div>
+
+            
           </div>
 
+          <div className="col-sm-2">
+            <div className="card">
+              <div className="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
+                <img src="https://media.istockphoto.com/id/2153987538/es/foto/business-performance-monitoring-and-evaluation-concept-take-an-assessment-business-man-using.jpg?s=612x612&w=0&k=20&c=SMF2mivD0CKRggrWJV-bJDGKU8ToBobBtpL--e1A7Qs=" className="img-fluid" />
+                <a href="#!">
+                  <div className="mask" style={{ background: '#87CEEB' }}></div>
+                </a>
+              </div>
+              <div className="card-body">
+                <h6 className="card-title">Administrar</h6>
+                <p className="card-text"></p>
+                <a className="btn btn-info btn-sm" data-mdb-ripple-init>
+                  <Link to="/categorias" style={link}>Categorias</Link>
+                </a>
+              </div>
+            </div>
 
-
-          <div className="col-1">
-
-          </div>
-
-
-
-          <div className="col-9">
             <br />
 
+            <div className="card">
+              <div className="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
+                <img src="https://media.istockphoto.com/id/1450730292/es/foto/candado-en-el-teclado-de-la-computadora-seguridad-de-red-seguridad-de-datos-y-protecci%C3%B3n.jpg?s=612x612&w=0&k=20&c=xLI-zMks4mGYAV5nNWQddCb46qTjscUcu0S-zK1Z8DU=" className="img-fluid" />
+                <a href="#!">
+                  <div className="mask" style={{ background: '#87CEEB' }}></div>
+                </a>
+              </div>
+              <div className="card-body">
+                <h6 className="card-title">Administrar</h6>
+                <p className="card-text"></p>
+                <a href="#!" className="btn btn-info btn-sm" data-mdb-ripple-init><Link to="/senhas" style={link}>Senhas</Link></a>
+              </div>
+            </div>
 
-            <h4 className="text2 display-6">Monitoramento de Estoque <i className="fas fa-chart-column"></i></h4>
+            
+          </div>
+    
+         <div className="col">
+
+         <h4 className="display-6">Quadro de alertas <i className="fas fa-chart-column"></i></h4>
             <div className="card">
 
               <Chart type="bar" data={chartData} options={chartOptions} />
