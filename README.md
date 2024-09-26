@@ -1,4 +1,4 @@
-            * O codigo em geral foi  ajustes para 100% responsive
+            * O codigo em geral foi  ajustado para 100% responsive
             
             * O login agora identifica o que esta incorrecto caso de error no momento de fazer login, valida se é usuario ou a senha errada
             
