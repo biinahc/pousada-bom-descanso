@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Outlet, Link } from "react-router-dom";
+import { Outlet} from "react-router-dom";
 import Header from './Header';
 import Footer from './Footer';
 import { Button } from 'primereact/button';
@@ -7,12 +7,10 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import axios from 'axios';
 import { Toast } from 'primereact/toast';
-import { Message } from 'primereact/message';
 import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
-import { IconField } from 'primereact/iconfield';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -32,7 +30,6 @@ function Categorias() {
   const [submitted, setSubmitted] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [categoria, setCategoria] = useState('');
-  const [array, setArray] = useState([]);
   const dt = useRef(null);
   const [deleteCategoriaDialog, setDeleteCategoriaDialog] = useState(false);
   const [products, setProducts] = useState(null);
@@ -54,22 +51,36 @@ function Categorias() {
   }, []);
 
 
+    // Función para eliminar acentos
+    const removeAccents = (string) => {
+        return string
+            .normalize('NFD') // Normaliza el string
+            .replace(/[\u0300-\u036f]/g, ''); // Elimina los caracteres de acento
+      };
+
+  // Capitalizar solo la primera letra 
+  const capitalizeFirstLetter = (string) => {
+    if (!string) return '';
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
+
+  
+
 
   const saveCategoria = () => {
     setSubmitted(true);
-
-
-
-    const categoriaExiste = categorias.some(categoria => categoria.nome === nome);
+     const categoriaExiste = categorias.some(categoria => categoria.nome === nome);
 
     if (categoriaExiste) {
       toast.current.show({ severity: 'warn', summary: 'Observação', detail: 'Categoria já exite', life: 3000 });
 
     } else {
-
+      
       if (nome) {
-        nome.charAt(0).toUpperCase();
-        axios.post('http://localhost:8080/categorias/create', { nome })
+        const nomeSemacentos = removeAccents(nome);
+        const upperNome = capitalizeFirstLetter(nomeSemacentos);
+        axios.post('http://localhost:8080/categorias/create', { nome:upperNome })
           .then(response => {
             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Categoria criada', life: 3000 });
           })
@@ -93,7 +104,7 @@ function Categorias() {
   const deleteCategoria = () => {
 
     let _categoria = { ...categoria };
-    console.log(_categoria.nome);
+ 
 
 
     const categoriaExiste = products.some(product => product.tipo_producto === _categoria.nome);
@@ -173,7 +184,7 @@ function Categorias() {
   const dataTable = {
     margin: "auto",
     padding: "10px",
-    width: "490px",
+    width: "100%",
   };
 
   const leftToolbarTemplate = () => {
@@ -202,7 +213,7 @@ function Categorias() {
 
     <div>
       <Header />
-      <Toast ref={toast} />
+     
 
       <br />
       <br />
@@ -212,10 +223,10 @@ function Categorias() {
       <div className="container text-center">
 
 
-        <div className="row">
+        <div className="row justify">
+        <Toast ref={toast} />
 
-
-          <div className="col">
+          <div className="col-sm-4">
             <div className="card">
               <div className="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
                 <img src="https://media.istockphoto.com/id/2153987538/es/foto/business-performance-monitoring-and-evaluation-concept-take-an-assessment-business-man-using.jpg?s=612x612&w=0&k=20&c=SMF2mivD0CKRggrWJV-bJDGKU8ToBobBtpL--e1A7Qs=" className="img-fluid" />
@@ -230,13 +241,8 @@ function Categorias() {
               </div>
             </div>
           </div>
+           
 
-
-
-
-          <div className="col-3">
-
-          </div>
           <div className="col">
             <div className="card">
 
@@ -247,9 +253,9 @@ function Categorias() {
 
                   <DataTable ref={dt} value={categorias} dataKey="id" className="datatable-responsive" scrollable scrollHeight="350px" >
 
-                    <Column field="id" header="#" sortable style={{ minWidth: '100px' }}></Column>
-                    <Column field="nome" header="Categoria" sortable style={{ minWidth: '80px' }}></Column>
-                    <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '80px' }}></Column>
+                    <Column field="id" header="#" sortable style={{ maxWidth: '10px' }}></Column>
+                    <Column field="nome" header="Categoria" sortable style={{ maxWidth: '50px' }}></Column>
+                    <Column body={actionBodyTemplate} exportable={false} style={{ maxWidth: '10px' }}></Column>
                   </DataTable>
 
                 </div>
