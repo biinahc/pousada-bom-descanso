@@ -292,12 +292,13 @@ export default function ProductsDemo() {
     return (
         <div>
             <Header />
+         <Toast ref={toast} />
             <br />
 
          
 
             <div style={dataTable}>
-                <Toast ref={toast} />
+              
                 <div className="card">
                     <Toolbar className="mb-4" left={leftToolbarTemplate} center={centerToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
