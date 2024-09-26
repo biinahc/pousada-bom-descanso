@@ -122,6 +122,8 @@ export default function Produtos(onAdmin) {
                     });
 
             } else {
+             
+          
                 axios.post('http://localhost:8080/produtos/create', _product)
                     .then(response => {
                         console.log(_product);
@@ -157,6 +159,7 @@ export default function Produtos(onAdmin) {
             toast.current.show({ severity: 'warn', summary: 'Observação', detail: 'Saida é maior que a quantidade atual', life: 4000 });
 
         } else {
+           
             axios.put('http://localhost:8080/produtos/update/' + product.id, _product, _product.bandeira = 1)
                 .then(response => {
 
@@ -263,20 +266,20 @@ export default function Produtos(onAdmin) {
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
-                <Button className="btn btn-outline-success btn-lg" label="Criar" icon="pi pi-plus" severity="success" onClick={openNew} />
+                <Button className="btn btn-outline-success btn-md" label="Criar" icon="pi pi-plus" severity="success" onClick={openNew} />
                 &nbsp;  &nbsp;  &nbsp;  &nbsp;
-                <Button className="btn btn-outline-danger btn-lg" label="Deletar" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
+                <Button className="btn btn-outline-danger btn-md" label="Deletar" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
             </div>
         );
     };
 
     const rightToolbarTemplate = () => {
-        return <Button label="Export" icon="pi pi-upload" className="btn btn-outline-info btn-lg" onClick={exportCSV} />;
+        return <Button label="Export" icon="pi pi-upload" className="btn btn-outline-info btn-md" onClick={exportCSV} />;
 
     };
 
     const centerToolbarTemplate = () => {
-        return <h4 class="display-6">Produtos<i class="fas fa-shopping-cart"></i></h4>
+        return <h4 class="display-7">Produtos<i class="fas fa-shopping-cart"></i></h4>
     };
 
 
@@ -353,7 +356,7 @@ export default function Produtos(onAdmin) {
     const dataTable = {
         margin: "auto",
         padding: "10px",
-        maxWidth: '1700px'
+        Width: '100%'
 
 
     };
