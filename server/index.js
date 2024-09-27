@@ -197,7 +197,7 @@ app.post('/produtos/create', async (req, res) => {
     };
   const marcaSemacentos = removeAccents(marca);
   const upperMarca = capitalizeFirstLetter(marcaSemacentos);
-  const nomeSemacentos = removeAccents(marca);
+  const nomeSemacentos = removeAccents(nome);
   const upperNome = capitalizeFirstLetter(nomeSemacentos);
 
   await produtos.create({ lt_kl_unid, marca:upperMarca, nome:upperNome, quantidade, quantidade_minima,tipo_producto});
