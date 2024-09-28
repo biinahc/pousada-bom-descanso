@@ -125,7 +125,7 @@ function Senhas() {
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
-                <h4 className="display-7">Senhas Admin <i className="fas fa-lock"></i></h4>
+                <h4 className="display-7">redefinindo Senhas de usuarios <i className="fas fa-lock"></i></h4>
             </div>
         );
     };
@@ -232,7 +232,7 @@ function Senhas() {
 
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
-                        Usuário
+                        Usuário:
                     </label>
                     <InputText disabled id="name" name="name" value={usuario.name} onChange={(e) => onInputChange(e, 'name')} />
 
@@ -242,7 +242,7 @@ function Senhas() {
 
                 <div className="field">
                     <label htmlFor="senha" className="font-bold">
-                        Nova senha
+                        Nova senha:
                     </label>
 
                     <InputText required id="senha" name="senha" value={senha} onChange={handleSenha} className={classNames({ 'p-invalid': submitted && !senha })} />

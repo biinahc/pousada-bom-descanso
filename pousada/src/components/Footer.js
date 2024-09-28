@@ -19,7 +19,7 @@ function Footer() {
 
 
 
-      <footer className="container-center bg-body-tertiary text-center  d-flex fixed-bottom">
+      <footer className="container-center bg-body-tertiary text-center  d-flex">
 
         <div className="fixed-bottom" style={{ background: '#ADD8E6' }}>
           © 2024 Copyright:

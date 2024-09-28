@@ -527,7 +527,7 @@ export default function Produtos(onAdmin) {
                     </label>
                     <InputText type="number" id="saida" onChange={(e) => onInputChange(e, 'saida')} required autoFocus />
                     {product.saida > product.status ?
-                        <small className="p-error">Não há quantidade sufuciente para saída </small>
+                        <small className="p-error pi pi-exclamation-triangle mr-3"> Não há quantidade sufuciente para saída! </small>
 
                         :
 

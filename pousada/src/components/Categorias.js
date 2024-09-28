@@ -235,10 +235,10 @@ function Categorias() {
                   <div className="mask" style={{ background: '#87CEEB' }}></div>
                 </a>
               </div>
-              <div className="card-body">
-                <h5 className="card-title">Criar categorias</h5>
+              <div className="card-body ">
+                <h5 className="card-title"></h5>
                 <p className="card-text"></p>
-                <Button className="btn btn-info btn-lg" label="Criar" style={link} icon="pi pi-plus" severity="info" onClick={openNew} />
+                <Button className="btn btn-info btn-lg" label="Criar nova Categoria" style={link} icon="pi pi-plus" severity="info" onClick={openNew} />
               </div>
             </div>
           </div>
@@ -282,17 +282,17 @@ function Categorias() {
             Nome de categoria
           </label>
           <InputText required id="nome" name="nome" value={nome} onChange={handleNome} className={classNames({ 'p-invalid': submitted && !nome })} />
-          {submitted && !nome && <small className="p-error">Nome é obligatorio.</small>}
+          {submitted && !nome && <small className="p-error">Nome é obrigatorio.</small>}
 
         </div>
 
       </Dialog>
       <Dialog visible={deleteCategoriaDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirmar" modal footer={deleteCategoriaDialogFooter} onHide={hideDeleteCategoriaDialog}>
         <div className="confirmation-content">
-          <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+          <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem',color: 'red'}} />
           {categoria.nome && (
             <span>
-              Tem certeza de que quer excluir a categoria : <b>{categoria.nome}</b>?
+              Tem certeza que quer a exclusão da categoria: <b>{categoria.nome}</b>?
             </span>
           )}
         </div>
