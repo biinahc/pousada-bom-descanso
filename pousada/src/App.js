@@ -4,6 +4,7 @@ import Users from './components/Users';
 import Produtos from './components/Produtos';
 import Login from './components/Login';
 import Categorias from './components/Categorias';
+import Senhas from './components/Senhas'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
 
@@ -62,6 +63,7 @@ function App() {
           <Route path="/usuarios" element={<Users />} />
           <Route path="/produtos/:flag" element={<Produtos />} />
           <Route path="/categorias" element={<Categorias />} />
+          <Route path="/senhas" element={<Senhas />} />
 
 
 

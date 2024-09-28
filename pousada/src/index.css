@@ -35,13 +35,13 @@ h1 {
 
 form {
   width:100%;
-  box-shadow: 5vh 5vh 100px rgba(238, 54, 54, 0.8);
+  box-shadow: 5vh 5vh 100px rgba(77,147,246);
   background-color: rgba(245, 245, 220, 0.636);
-  opacity: 99% ;
+  opacity: 100% ;
 }
 
 .form-control {
-  box-shadow: 0 0 10px rgba(216, 42, 19, 0.862);
+  box-shadow: 0 0 10px rgba(77,147,246);
 }
 
 .text1{
