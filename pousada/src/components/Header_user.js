@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from './PBC.png';
+import Logo from './login.png';
 import { Outlet, Link } from "react-router-dom";
 
 
@@ -19,24 +19,16 @@ function Header_user() {
 
     <div>
 
-<link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
 
       <nav className="navbar navbar-expand-lg  bg-body-tertiary" style={{ background: '#87CEEB' }}>
 
         <div className="container-fluid">
 
-          <button
-            data-mdb-collapse-init
-            className="navbar-toggler"
-            type="button"
-            data-mdb-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <i className="fas fa-bars"></i>
-          </button>
+         
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+  </button>
 
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -44,7 +36,7 @@ function Header_user() {
             <a className="navbar-brand mt-2 mt-lg-0" href="#">
               <img
                 src={Logo}
-                height="60"
+                height="50"
                 alt="Pousada Bom Descanso"
                 loading="lazy"
               />
@@ -52,16 +44,16 @@ function Header_user() {
 
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link lni lni-home">
+                <a className="nav-link">
 
-                  <Link to="/home_user" style={link}><strong>Início</strong></Link>
+                  <Link to="/home_user" style={link}><strong><i className="fas fa-home"></i>  Inicio</strong></Link>
                 </a>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link lni lni-layers" >
+                <a className="nav-link text-white" >
 
-                  <Link to="/produtos/''" style={link}><strong>Produtos</strong></Link>
+                  <Link to="/produtos/''" style={link}><strong><i className="fas fa-shopping-cart"></i> Produtos</strong></Link>
 
                 </a>
               </li>
@@ -72,10 +64,8 @@ function Header_user() {
           </div>
 
           <ul className="navbar-nav d-flex flex-row me-1">
-            <a className="nav-link mb-15 me-lg-5" >Bem-vindo! </a>
             <li className="nav-item me-3 me-lg-0">
               <a className="nav-link" ><i className="fas fa-right-to-bracket fa-x2"></i> <Link to="/" style={link}><strong>Sair</strong></Link></a>
-              
             </li>
             <li className="nav-item me-3 me-lg-0">
               <a className="nav-link text-white" > </a>

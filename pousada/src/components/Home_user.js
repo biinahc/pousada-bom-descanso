@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, Link, useLocation } from "react-router-dom";
-import Header from './Header';
 import Footer from './Footer';
 import { Chart } from 'primereact/chart';
 import axios from 'axios';
 import Header_user from './Header_user';
+import Logo from './login.png';
 
 
 
@@ -115,48 +115,40 @@ function Home_user() {
 
 
 
-                <div className="row">
+                <div className="row justify">
 
-                    <div className="col-2">
+                    <div className="col-sm-3">
 
                         <br />
                         <br />
                         <br />
                         <br />
-                        <br />
-                        <br />
+
 
                         <div className="card">
                             <div className="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
-                                <img src="https://as2.ftcdn.net/v2/jpg/06/24/33/91/1000_F_624339153_zyidXmC8A8yJMwql04TP92xWXOEHLIrK.jpg" className="img-fluid" />
+                                <img src="https://media.istockphoto.com/id/1195741045/pt/foto/technician-using-digital-tablet-while-working-in-the-production-line-of-a-factory-checking.jpg?s=612x612&w=0&k=20&c=3ql0nbl8byATlrExwwU9VQhKId2wGcZQfDUsi4rdwZQ=" className="img-fluid" />
                                 <a href="#!">
                                     <div className="mask" style={{ background: '#87CEEB' }}></div>
                                 </a>
                             </div>
                             <div className="card-body">
-                                <h6 className="card-title">Estoque</h6>
+                                <h6 className="card-title">Gerênciar</h6>
                                 <p className="card-text"></p>
-                                <a href="#!" className="btn btn-info btn-md" data-mdb-ripple-init><Link to="/produtos/''" style={link}> Gerênciar</Link></a>
+                                <a href="#!" className="btn btn-info btn-md" data-mdb-ripple-init><Link to="/produtos/''" style={link}> Produtos</Link></a>
                             </div>
                         </div>
                     </div>
 
 
-
-                    <div className="col-1">
-
-                    </div>
-
-
-
-                    <div className="col-9">
+                    <div className="col">
                         <br />
                         <br />
 
 
 
 
-                        <h4 className="text1 display-6">Monitoramento de Estoque<i className="fas fa-chart-column"></i></h4>
+                        <h4 className="display-6">Monitoramento de Estoque <i className="fas fa-chart-column"></i></h4>
                         <div className="card">
 
                             <Chart type="bar" data={chartData} options={chartOptions} />

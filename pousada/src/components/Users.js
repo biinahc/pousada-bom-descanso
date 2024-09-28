@@ -21,6 +21,7 @@ import Header from './Header';
 
 
 
+
 export default function ProductsDemo() {
     let emptyProduct = {
         id: null,
@@ -52,12 +53,13 @@ export default function ProductsDemo() {
 
 
     ];
-
+     
+  
     useEffect(() => {
         axios.get('http://localhost:8080/users')
-            .then(response => setProducts(response.data));
+            .then(response => setProducts(response.data))
     }, [product]);
-
+ 
 
 
     const openNew = () => {
@@ -86,7 +88,7 @@ export default function ProductsDemo() {
             let _products = [...products];
             let _product = { ...product };
 
-            console.log(_product);
+         
 
             if (product.id) {
                 axios.put('http://localhost:8080/users/update/' + product.id, _product)
@@ -201,19 +203,19 @@ export default function ProductsDemo() {
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
-                <Button className="btn btn-outline-success btn-lg" label="Criar" icon="pi pi-plus" severity="success" onClick={openNew} />
+                <Button className="btn btn-outline-success btn-md" label="Criar" icon="pi pi-plus" severity="success" onClick={openNew} />
                 &nbsp;  &nbsp;  &nbsp;  &nbsp;
-                <Button className="btn btn-outline-danger btn-lg" label="Deletar" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
+                <Button className="btn btn-outline-danger btn-md" label="Deletar" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
             </div>
         );
     };
 
     const rightToolbarTemplate = () => {
-        return <Button label="Export" icon="pi pi-upload" className="btn btn-outline-info btn-lg" onClick={exportCSV} />;
+        return <Button label="Export" icon="pi pi-upload" className="btn btn-outline-info btn-md" onClick={exportCSV} />;
     };
 
     const centerToolbarTemplate = () => {
-        return <h4 class="display-6">Usuários   <i class="fas fa-users"></i></h4>
+        return <h4 class="display-7">Usuários   <i class="fas fa-users"></i></h4>
     };
 
     const actionBodyTemplate = (product) => {
@@ -280,41 +282,45 @@ export default function ProductsDemo() {
 
     const dataTable = {
         margin: "auto",
-        padding: "15px",
-        width: "1220px",
+        padding: "10px",
+        width: "100%",
+      
     };
+    
+       
 
     return (
         <div>
             <Header />
+         <Toast ref={toast} />
             <br />
 
-
+         
 
             <div style={dataTable}>
-                <Toast ref={toast} />
+              
                 <div className="card">
                     <Toolbar className="mb-4" left={leftToolbarTemplate} center={centerToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
-                    <DataTable ref={dt} value={products} selection={selectedProducts} stripedRows onSelectionChange={(e) => setSelectedProducts(e.value)}
+                    <DataTable ref={dt} value={products}  resizableColumns selection={selectedProducts} stripedRows onSelectionChange={(e) => setSelectedProducts(e.value)}
                         dataKey="id" paginator rows={8} rowsPerPageOptions={[5, 10, 25]} className="datatable-responsive"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header} scrollable scrollHeight="400px" >
                         <Column selectionMode="multiple" exportable={false}></Column>
                         <Column field="id" header="#" sortable style={{ minWidth: '8rem' }}></Column>
                         <Column field="name" header="Usuario" sortable style={{ minWidth: '8rem' }}></Column>
-                        <Column field="senha" header="senha" sortable style={{ minWidth: '8rem' }}></Column>
+                       
                         <Column field="createdAt" header="Criado" sortable style={{ minWidth: '8rem' }}></Column>
                         <Column field="updatedAt" header="Editado" sortable style={{ minWidth: '8rem' }}></Column>
-                        <Column field="status" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '7rem' }}></Column>
                         <Column field="perfil" header="Perfil" sortable style={{ minWidth: '8rem' }}></Column>
+                        <Column field="status" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '7rem' }}></Column>
                         <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '9rem' }}></Column>
                     </DataTable>
 
                 </div>
             </div>
-
-            <h1>{product.name}</h1>
+   
+         
             {/************************************************************** MODALES ***************************************************************** */}
 
 
@@ -329,14 +335,22 @@ export default function ProductsDemo() {
                     {submitted && !product.name && <small className="p-error">Nome é obligatorio.</small>}
                 </div>
                 <div className="field">
+
+                {product.id ?
+                  <InputText hidden id="senha" value={product.senha} onChange={(e) => onInputChange(e, 'senha')} required rows={2} cols={20} />  
+
+                  :
+                  <>
                     <label htmlFor="senha" className="font-bold">
                         Senha
                     </label>
                     <InputText id="senha" value={product.senha} onChange={(e) => onInputChange(e, 'senha')} required rows={2} cols={20} />
+                    </>
+                  }
                 </div>
 
                 <div className="field">
-                    <label htmlFor="senha" className="font-bold">
+                    <label htmlFor="status" className="font-bold">
                         Status
                     </label>
                     <Dropdown className="w-full md:w-14rem" id="status" options={status_user} optionLabel="name" value={product.status} onChange={(e) => onInputChange(e, 'status')}

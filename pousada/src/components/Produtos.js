@@ -122,6 +122,8 @@ export default function Produtos(onAdmin) {
                     });
 
             } else {
+             
+          
                 axios.post('http://localhost:8080/produtos/create', _product)
                     .then(response => {
                         console.log(_product);
@@ -157,6 +159,7 @@ export default function Produtos(onAdmin) {
             toast.current.show({ severity: 'warn', summary: 'Observação', detail: 'Saida é maior que a quantidade atual', life: 4000 });
 
         } else {
+           
             axios.put('http://localhost:8080/produtos/update/' + product.id, _product, _product.bandeira = 1)
                 .then(response => {
 
@@ -263,20 +266,20 @@ export default function Produtos(onAdmin) {
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
-                <Button className="btn btn-outline-success btn-lg" label="Criar" icon="pi pi-plus" severity="success" onClick={openNew} />
+                <Button className="btn btn-outline-success btn-md" label="Criar" icon="pi pi-plus" severity="success" onClick={openNew} />
                 &nbsp;  &nbsp;  &nbsp;  &nbsp;
-                <Button className="btn btn-outline-danger btn-lg" label="Deletar" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
+                <Button className="btn btn-outline-danger btn-md" label="Apagar" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
             </div>
         );
     };
 
     const rightToolbarTemplate = () => {
-        return <Button label="Export" icon="pi pi-upload" className="btn btn-outline-info btn-lg" onClick={exportCSV} />;
+        return <Button label="Exportar" icon="pi pi-upload" className="btn btn-outline-info btn-md" onClick={exportCSV} />;
 
     };
 
     const centerToolbarTemplate = () => {
-        return <h4 class="display-6">Produtos<i class="fas fa-shopping-cart"></i></h4>
+        return <h4 class="display-7"> Produtos <i class="fas fa-shopping-cart"></i></h4>
     };
 
 
@@ -353,7 +356,7 @@ export default function Produtos(onAdmin) {
     const dataTable = {
         margin: "auto",
         padding: "10px",
-        maxWidth: '1700px'
+        Width: '100%'
 
 
     };
@@ -362,13 +365,13 @@ export default function Produtos(onAdmin) {
 
     return (
         <div>
-
+           
             {flag === '1' ? <Header /> : <Header_user />}
-
+             <Toast ref={toast} />
             <br />
 
             <div style={dataTable}>
-                <Toast ref={toast} />
+               
                 <div className="card">
                     <Toolbar className="mb-4" left={leftToolbarTemplate} center={centerToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
@@ -387,6 +390,7 @@ export default function Produtos(onAdmin) {
                         <Column field="updatedAt" header="Editado" sortable style={{ minWidth: '100px' }}></Column>
                         <Column field="status" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '6rem' }}></Column>
                         <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '9rem' }}></Column>
+                        
                     </DataTable>
 
                 </div>
@@ -399,7 +403,7 @@ export default function Produtos(onAdmin) {
 
                 <div className="field">
                     <label htmlFor="senha" className="font-bold">
-                        Categoria de Produto
+                        Categoria de Produto:
                     </label>
 
 
@@ -417,10 +421,10 @@ export default function Produtos(onAdmin) {
 
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
-                        Nome
+                        Nome:
                     </label>
                     <InputText id="nome" value={product.nome} onChange={(e) => onInputChange(e, 'nome')} className={classNames({ 'p-invalid': submitted && !product.nome })} />
-                    {submitted && !product.nome && <small className="p-error">Campo é obligatorio.</small>}
+                    {submitted && !product.nome && <small className="p-error">Campo é obrigatório.</small>}
                 </div>
                 <div className="field">
 
@@ -430,10 +434,10 @@ export default function Produtos(onAdmin) {
 
                         :
                         <><label htmlFor="quantidade" className="font-bold">
-                            Quantidade de ingresso
+                            Quantidade em estoque:
                         </label>
                             <InputText type="number" id="quantidade" value={product.quantidade} onChange={(e) => onInputChange(e, 'quantidade')} rows={2} cols={20} className={classNames({ 'p-invalid': submitted && !product.quantidade })} />
-                            {submitted && !product.quantidade && <small className="p-error">Campo é obligatorio.</small>}
+                            {submitted && !product.quantidade && <small className="p-error">Campo é obrigatório.</small>}
                         </>
                     }
 
@@ -442,17 +446,17 @@ export default function Produtos(onAdmin) {
                 <div className="field">
 
                     <label htmlFor="quantidade_minima" className="font-bold">
-                        Quantidade para gerar alerta
+                        Quantidade para gerar alerta de baixo estoque:
                     </label>
                     <InputText type="number" id="quantidade_minima" value={product.quantidade_minima} onChange={(e) => onInputChange(e, 'quantidade_minima')} equired rows={2} cols={20} className={classNames({ 'p-invalid': submitted && !product.quantidade_minima })} />
-                    {submitted && !product.quantidade_minima && <small className="p-error">Campo é obligatorio.</small>}
+                    {submitted && !product.quantidade_minima && <small className="p-error">Campo é obrigatório.</small>}
 
 
                 </div>
 
                 <div className="field">
                     <label htmlFor="senha" className="font-bold">
-                        Por:
+                        Tipo de Unidade:
                     </label>
                     <Dropdown className="w-full md:w-14rem" id="lt_kl_unid" options={tipo_compra} optionLabel="name" required autoFocus value={product.lt_kl_unid} onChange={(e) => onInputChange(e, 'lt_kl_unid')}
 
@@ -460,7 +464,7 @@ export default function Produtos(onAdmin) {
                 </div>
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
-                        Marca
+                        Marca do Produto:
                     </label>
                     <InputText id="marca" value={product.marca} onChange={(e) => onInputChange(e, 'marca')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.marca })} />
                     {submitted && !product.quantidade_marca && <small className="p-error">Campo é obligatorio.</small>}
@@ -476,7 +480,7 @@ export default function Produtos(onAdmin) {
 
                 <div className="field">
                     <label htmlFor="senha" className="font-bold">
-                        Categoria de Produto
+                        Categoria de Produto:
                     </label>
                     <select disabled id="tipo_producto" class="form-select" value={product.tipo_producto} onChange={(e) => onInputChange(e, 'tipo_producto')}>
                         {categorias.map(option => (
@@ -491,7 +495,7 @@ export default function Produtos(onAdmin) {
 
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
-                        Nome
+                        Nome:
                     </label>
                     <InputText disabled id="nome" value={product.nome} onChange={(e) => onInputChange(e, 'nome')} required className={classNames({ 'p-invalid': submitted && !product.nome })} />
 
@@ -499,7 +503,7 @@ export default function Produtos(onAdmin) {
 
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
-                        Marca
+                        Marca do produto:
                     </label>
                     <InputText disabled id="marca" value={product.marca} onChange={(e) => onInputChange(e, 'marca')} required autoFocus />
 
@@ -508,7 +512,7 @@ export default function Produtos(onAdmin) {
 
 
                     <label htmlFor="quantidade" className="font-bold">
-                        Quantidade atual
+                        Quantidade atual no estoque:
                     </label>
                     <InputText disabled type="number" id="status" value={product.status} onChange={(e) => onInputChange(e, 'status')} equired rows={2} cols={20} />
 
@@ -519,11 +523,11 @@ export default function Produtos(onAdmin) {
 
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
-                        Saida:
+                        Quantidade de Saída:
                     </label>
                     <InputText type="number" id="saida" onChange={(e) => onInputChange(e, 'saida')} required autoFocus />
                     {product.saida > product.status ?
-                        <small className="p-error">Não há sufuciente </small>
+                        <small className="p-error">Não há quantidade sufuciente para saída </small>
 
                         :
 
@@ -536,10 +540,10 @@ export default function Produtos(onAdmin) {
 
             <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirmar" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
                 <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem', color: 'red' }} />
                     {product && (
                         <span>
-                            Tem certeza de que quer excluir o Item : <b>{product.nome}</b>?
+                        Tem certeza de que quer excluir o Item: <b>{product.nome}</b>?
                         </span>
                     )}
                 </div>
@@ -547,8 +551,8 @@ export default function Produtos(onAdmin) {
 
             <Dialog visible={deleteProductsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirmar" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
                 <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {product && <span>Tem certeza de que quer excluir os usuarios seleccionados?</span>}
+                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem', color: 'red' }} />
+                    {product && <span>Tem certeza na exclusão dos itens selecionados ?</span>}
                 </div>
             </Dialog>
 
