@@ -82,7 +82,7 @@ function Categorias() {
         const upperNome = capitalizeFirstLetter(nomeSemacentos);
         axios.post('http://localhost:8080/categorias/create', { nome:upperNome })
           .then(response => {
-            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Categoria criada', life: 3000 });
+            toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Categoria criada', life: 3000 });
           })
           .catch(error => {
             console.log(error);
@@ -117,7 +117,7 @@ function Categorias() {
       axios.delete('http://localhost:8080/categorias/' + _categoria.id)
         .then(response => {
 
-          toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Categoria excluida', life: 3000 });
+          toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Categoria excluida', life: 3000 });
         })
         .catch(error => {
           console.log(error);

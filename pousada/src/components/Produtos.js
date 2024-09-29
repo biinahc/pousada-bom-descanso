@@ -30,12 +30,12 @@ export default function Produtos(onAdmin) {
         id: null,
         tipo_producto: null,
         nome: '',
-        quantidade: '',
-        quantidade_minima: '',
+        quantidade: '0',
+        quantidade_minima: '0',
         lt_kl_unid: '',
         marca: '',
-        saida: '',
-        status: ''
+        saida: '0',
+        status: '0'
     };
 
 
@@ -115,9 +115,10 @@ export default function Produtos(onAdmin) {
                 axios.put('http://localhost:8080/produtos/update/' + product.id, _product)
                     .then(response => {
                         {/*console.log(_product);*/ }
-                        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Item Atualizado', life: 3000 });
+                        toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Item Atualizado', life: 3000 });
                     })
                     .catch(error => {
+                        toast.current.show({severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000});
                         console.log(error);
                     });
 
@@ -127,9 +128,10 @@ export default function Produtos(onAdmin) {
                 axios.post('http://localhost:8080/produtos/create', _product)
                     .then(response => {
                         console.log(_product);
-                        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Item criado !!', life: 3000 });
+                        toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Item criado !!', life: 3000 });
                     })
                     .catch(error => {
+                        toast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000});
                         console.log(error);
                     });
 
@@ -163,7 +165,7 @@ export default function Produtos(onAdmin) {
             axios.put('http://localhost:8080/produtos/update/' + product.id, _product, _product.bandeira = 1)
                 .then(response => {
 
-                    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Saida cadastrada', life: 3000 });
+                    toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Saida e Entrada cadastrada', life: 3000 });
                 })
                 .catch(error => {
                     console.log(error);
@@ -203,7 +205,7 @@ export default function Produtos(onAdmin) {
         axios.delete('http://localhost:8080/produtos/' + _product.id)
             .then(response => {
 
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Item excluido', life: 3000 });
+                toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Item excluído', life: 3000 });
             })
             .catch(error => {
                 console.log(error);
@@ -224,7 +226,7 @@ export default function Produtos(onAdmin) {
         axios.delete('http://localhost:8080/items/produtos', { data: { ids: ids } })
             .then(response => {
 
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Items excluidos', life: 3000 });
+                toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Items excluídos', life: 3000 });
 
             })
             .catch(error => console.error(error));
@@ -256,12 +258,16 @@ export default function Produtos(onAdmin) {
 
 
         setProduct(_product);
-
-
-
     };
 
-
+    const onInputNumberChange = (e, name) => {
+        const newValue = (e.target && e.target.value) || '';
+        if(newValue >= 0 || newValue === '') {
+            let _product = { ...product };
+            _product[`${name}`] = newValue;        
+            setProduct(_product);
+        }
+    }
 
     const leftToolbarTemplate = () => {
         return (
@@ -335,7 +341,7 @@ export default function Produtos(onAdmin) {
         <React.Fragment>
             <Button label="Cancelar" className="btn btn-outline-danger btn-sm" icon="pi pi-times" outlined onClick={hideDialog} />
             &nbsp;
-            <Button label="Salvar" className="btn btn-outline-success btn-sm" icon="pi pi-check" onClick={saveSaida} />
+            <Button label="Salvar" className="btn btn-outline-success btn-sm" icon="pi pi-check" disabled={product.saida > product.status || product.saida === ''} onClick={saveSaida} />
         </React.Fragment>
     );
     const deleteProductDialogFooter = (
@@ -378,9 +384,9 @@ export default function Produtos(onAdmin) {
                     <DataTable ref={dt} footer={footer} value={products} stripedRows selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
                         dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]} className="datatable-responsive"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} produtos" globalFilter={globalFilter} header={header} resizableColumns showGridlines>
+                        currentPageReportTemplate="Página {first} de {last} a {totalRecords} produtos" globalFilter={globalFilter} header={header} resizableColumns showGridlines>
                         <Column selectionMode="multiple" exportable={false}></Column>
-                        <Column field="id" header="#" sortable style={{ minWidth: '3rem' }}></Column>
+                        <Column body={(rowData, {rowIndex}) => rowIndex + 1} header="#" sortable style={{minWidth: '3rem'}}></Column>
                         <Column field="tipo_producto" header="Tipo de Produto" sortable style={{ minWidth: '6rem' }}></Column>
                         <Column field="nome" header="Nome" sortable style={{ minWidth: '6rem' }}></Column>
                         <Column field="quantidade" header="Quant." sortable style={{ minWidth: '100px' }}></Column>
@@ -436,7 +442,7 @@ export default function Produtos(onAdmin) {
                         <><label htmlFor="quantidade" className="font-bold">
                             Quantidade em estoque:
                         </label>
-                            <InputText type="number" id="quantidade" value={product.quantidade} onChange={(e) => onInputChange(e, 'quantidade')} rows={2} cols={20} className={classNames({ 'p-invalid': submitted && !product.quantidade })} />
+                            <InputText type="number" id="quantidade" value={product.quantidade} min={0} onChange={(e) => onInputNumberChange(e, 'quantidade')} rows={2} cols={20} className={classNames({ 'p-invalid': submitted && !product.quantidade })} />
                             {submitted && !product.quantidade && <small className="p-error">Campo é obrigatório.</small>}
                         </>
                     }
@@ -448,7 +454,7 @@ export default function Produtos(onAdmin) {
                     <label htmlFor="quantidade_minima" className="font-bold">
                         Quantidade para gerar alerta de baixo estoque:
                     </label>
-                    <InputText type="number" id="quantidade_minima" value={product.quantidade_minima} onChange={(e) => onInputChange(e, 'quantidade_minima')} equired rows={2} cols={20} className={classNames({ 'p-invalid': submitted && !product.quantidade_minima })} />
+                    <InputText type="number" id="quantidade_minima" value={product.quantidade_minima} min={0} onChange={(e) => onInputNumberChange(e, 'quantidade_minima')} equired rows={2} cols={20} className={classNames({ 'p-invalid': submitted && !product.quantidade_minima })} />
                     {submitted && !product.quantidade_minima && <small className="p-error">Campo é obrigatório.</small>}
 
 
@@ -514,18 +520,17 @@ export default function Produtos(onAdmin) {
                     <label htmlFor="quantidade" className="font-bold">
                         Quantidade atual no estoque:
                     </label>
-                    <InputText disabled type="number" id="status" value={product.status} onChange={(e) => onInputChange(e, 'status')} equired rows={2} cols={20} />
+                    <InputText type="number" id="status" value={product.status} onChange={(e) => onInputChange(e, 'status')} equired rows={2} cols={20} />
 
 
                 </div>
 
-
-
+            
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
                         Quantidade de Saída:
                     </label>
-                    <InputText type="number" id="saida" onChange={(e) => onInputChange(e, 'saida')} required autoFocus />
+                    <InputText type="number" id="saida" min={0} onChange={(e) => onInputNumberChange(e, 'saida')} required autoFocus />
                     {product.saida > product.status ?
                         <small className="p-error pi pi-exclamation-triangle mr-3"> Não há quantidade sufuciente para saída! </small>
 
@@ -555,6 +560,7 @@ export default function Produtos(onAdmin) {
                     {product && <span>Tem certeza na exclusão dos itens selecionados ?</span>}
                 </div>
             </Dialog>
+
 
             <Footer />
         </div>

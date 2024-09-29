@@ -49,7 +49,7 @@ export default function ProductsDemo() {
 
     const perfil_user = [
         { name: 'Admin', value: 'Admin' },
-        { name: 'Usuario', value: 'Usuario' }
+        { name: 'Usuário', value: 'Usuário' }
 
 
     ];
@@ -94,7 +94,7 @@ export default function ProductsDemo() {
                 axios.put('http://localhost:8080/users/update/' + product.id, _product)
                     .then(response => {
                         {/*console.log(_product);*/ }
-                        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuario Atualizado', life: 3000 });
+                        toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Usuario Atualizado', life: 3000 });
                     })
                     .catch(error => {
                         console.log(error);
@@ -104,7 +104,7 @@ export default function ProductsDemo() {
                 axios.post('http://localhost:8080/users/create', _product)
                     .then(response => {
                         {/*console.log(_product);*/ }
-                        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuario criado', life: 3000 });
+                        toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Usuario criado', life: 3000 });
                     })
                     .catch(error => {
                         console.log(error);
@@ -143,7 +143,7 @@ export default function ProductsDemo() {
         axios.delete('http://localhost:8080/users/' + _product.id)
             .then(response => {
 
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuario excluido', life: 3000 });
+                toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Usuário excluído', life: 3000 });
             })
             .catch(error => {
                 console.log(error);
@@ -165,7 +165,7 @@ export default function ProductsDemo() {
         axios.delete('http://localhost:8080/items/users', { data: { ids: ids } })
             .then(response => {
 
-                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuarios excluidos', life: 3000 });
+                toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Usuários excluídos', life: 3000 });
 
             })
             .catch(error => console.error(error));
@@ -305,7 +305,7 @@ export default function ProductsDemo() {
                     <DataTable ref={dt} value={products}  resizableColumns selection={selectedProducts} stripedRows onSelectionChange={(e) => setSelectedProducts(e.value)}
                         dataKey="id" paginator rows={8} rowsPerPageOptions={[5, 10, 25]} className="datatable-responsive"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header} scrollable scrollHeight="400px" >
+                        currentPageReportTemplate="Página {first} a {last} de {totalRecords} produtos" globalFilter={globalFilter} header={header} scrollable scrollHeight="400px" >
                         <Column selectionMode="multiple" exportable={false}></Column>
                         <Column field="id" header="#" sortable style={{ minWidth: '8rem' }}></Column>
                         <Column field="name" header="Usuario" sortable style={{ minWidth: '8rem' }}></Column>
@@ -329,10 +329,10 @@ export default function ProductsDemo() {
 
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
-                        Nome de usuario
+                        Nome de usuário
                     </label>
                     <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} />
-                    {submitted && !product.name && <small className="p-error">Nome é obligatorio.</small>}
+                    {submitted && !product.name && <small className="p-error">Nome é obrigatório.</small>}
                 </div>
                 <div className="field">
 

@@ -62,7 +62,7 @@ function Senhas() {
             axios.put('http://localhost:8080/senha/update/' + usuario.id, { senha })
                 .then(response => {
 
-                    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Usuario Atualizado', life: 3000 });
+                    toast.current.show({ severity: 'success', summary: 'Sucesso', detail: 'Usuario Atualizado', life: 3000 });
                 })
                 .catch(error => {
                     console.log(error);

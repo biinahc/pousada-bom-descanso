@@ -47,7 +47,7 @@ app.post('/login', async (req, res) => {
   const user = await users.findOne({ where: { name } });
 
   if (!user) {
-    return res.status(404).json({ message: 'Usuario não encontrado' });
+    return res.status(404).json({ message: 'Usuário não encontrado' });
   }
 
  try {
@@ -60,10 +60,10 @@ app.post('/login', async (req, res) => {
     res.status(200).json({ success: true, message: 'Login com sucesso e Admin' });
 
   }else if(match && user.status === 'Activo' && user.perfil === 'Usuario'){
-    res.status(202).json({ error: true, message: 'Login com sucesso e Usuario' });
+    res.status(202).json({ error: true, message: 'Login feito com sucesso e Usuário' });
 
     }else if(match && user.status === 'Inativo'){
-    res.status(401).json({ error: true, message: 'Usuario Inativo' });
+    res.status(401).json({ error: true, message: 'Usuário Inativo' });
 
     }
   
@@ -108,7 +108,7 @@ app.put('/users/update/:id', async (req, res) => {
     res.json(user);
 
   } else {
-    res.status(404).json({ message: 'Usuario não encontrado' });
+    res.status(404).json({ message: 'Usuário não encontrado' });
   }
 });
 
@@ -127,7 +127,7 @@ app.put('/senha/update/:id', async (req, res) => {
     res.json(novoPassword);
 
   } else {
-    res.status(404).json({ message: 'Usuario não encontrado' });
+    res.status(404).json({ message: 'Usuário não encontrado' });
   }
 });
 
@@ -136,9 +136,9 @@ app.delete('/users/:id', async (req, res) => {
   const user = await users.findByPk(req.params.id);
   if (user) {
     await user.destroy();
-    res.json({ message: 'Usuario excluido' });
+    res.json({ message: 'Usuário excluído' });
   } else {
-    res.status(404).json({ message: 'Usuario não encontrado' });
+    res.status(404).json({ message: 'Usuário não encontrado' });
   }
 
 
@@ -155,7 +155,7 @@ app.delete('/items/users', async (req, res) => {
         id: ids,
       },
     });
-    res.status(200).json({ message: 'Usuarios excluidos com sucesso.' });
+    res.status(200).json({ message: 'Usuários excluídos com sucesso!' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -200,21 +200,29 @@ app.post('/produtos/create', async (req, res) => {
   const nomeSemacentos = removeAccents(nome);
   const upperNome = capitalizeFirstLetter(nomeSemacentos);
 
-  await produtos.create({ lt_kl_unid, marca:upperMarca, nome:upperNome, quantidade, quantidade_minima,tipo_producto});
- /* const product = await produtos.create(req.body);*/
-  res.json(marca);
-
+  const product = await produtos.findOne({ where: { marca: upperMarca } });
+  if(!product) {
+    await produtos.create({ lt_kl_unid, marca:upperMarca, nome:upperNome, quantidade, quantidade_minima,tipo_producto});
+   /* const product = await produtos.create(req.body);*/
+    res.json(marca);
+  } else {
+    return res.status(404).json({ message: 'Produto já cadastrado' });
+  }
 });
 
 
 app.put('/produtos/update/:id', async (req, res) => {
+  const {lt_kl_unid, marca, nome, quantidade, quantidade_minima,tipo_producto} = req.body;
   const product = await produtos.findByPk(req.params.id);
   if (product) {
-    await product.update(req.body);
-    res.json({ message: 'Producto atualizado !' });
-
+    if(quantidade_minima >= 0 && quantidade >= 0) {
+      await product.update(req.body);
+      res.json({ message: 'Produto atualizado !' });
+    } else {
+      res.status(404).json({ message: 'Não use quantidades negativas' });  
+    }
   } else {
-    res.status(404).json({ message: 'Usuario não encontrado' });
+    res.status(404).json({ message: 'Produto não encontrado' });
   }
 });
 
@@ -222,7 +230,7 @@ app.delete('/produtos/:id', async (req, res) => {
   const product = await produtos.findByPk(req.params.id);
   if (product) {
     await product.destroy();
-    res.json({ message: 'Item excluido !' });
+    res.json({ message: 'Item excluído !' });
   } else {
     res.status(404).json({ message: 'Item não encontrado' });
   }
@@ -238,7 +246,7 @@ app.delete('/items/produtos', async (req, res) => {
         id: ids,
       },
     });
-    res.status(200).json({ message: 'Items excluidos com sucesso.' });
+    res.status(200).json({ message: 'Itens excluídos com sucesso.' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -260,7 +268,7 @@ app.delete('/categorias/:id', async (req, res) => {
   const categori = await categorias.findByPk(req.params.id);
   if (categori) {
     await categori.destroy();
-    res.json({ message: 'Item excluido !' });
+    res.json({ message: 'Item excluído !' });
   } else {
     res.status(404).json({ message: 'Item não encontrado' });
   }
