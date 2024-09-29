@@ -217,7 +217,11 @@ app.put('/produtos/update/:id', async (req, res) => {
   if (product) {
     if(quantidade_minima >= 0 && quantidade >= 0) {
       await product.update(req.body);
+<<<<<<< HEAD
       res.json({ message: 'Produto atualizado !' });
+=======
+      res.json({ message: 'Producto atualizado !' });
+>>>>>>> 84832ca914da59fb4c7b27dff3ddad171864cbab
     } else {
       res.status(404).json({ message: 'Não use quantidades negativas' });  
     }

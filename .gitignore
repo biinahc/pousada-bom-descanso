@@ -1,4 +1,8 @@
 # dependencies
 /server/node_modules
+<<<<<<< HEAD
 /pousada/node_modules
 node_modules
+=======
+/pousada/node_modules
+>>>>>>> 84832ca914da59fb4c7b27dff3ddad171864cbab
