@@ -200,21 +200,29 @@ app.post('/produtos/create', async (req, res) => {
   const nomeSemacentos = removeAccents(nome);
   const upperNome = capitalizeFirstLetter(nomeSemacentos);
 
-  await produtos.create({ lt_kl_unid, marca:upperMarca, nome:upperNome, quantidade, quantidade_minima,tipo_producto});
- /* const product = await produtos.create(req.body);*/
-  res.json(marca);
-
+  const product = await produtos.findOne({ where: { marca: upperMarca } });
+  if(!product) {
+    await produtos.create({ lt_kl_unid, marca:upperMarca, nome:upperNome, quantidade, quantidade_minima,tipo_producto});
+   /* const product = await produtos.create(req.body);*/
+    res.json(marca);
+  } else {
+    return res.status(404).json({ message: 'Produto já cadastrado' });
+  }
 });
 
 
 app.put('/produtos/update/:id', async (req, res) => {
+  const {lt_kl_unid, marca, nome, quantidade, quantidade_minima,tipo_producto} = req.body;
   const product = await produtos.findByPk(req.params.id);
   if (product) {
-    await product.update(req.body);
-    res.json({ message: 'Producto atualizado !' });
-
+    if(quantidade_minima >= 0 && quantidade >= 0) {
+      await product.update(req.body);
+      res.json({ message: 'Producto atualizado !' });
+    } else {
+      res.status(404).json({ message: 'Não use quantidades negativas' });  
+    }
   } else {
-    res.status(404).json({ message: 'Usuario não encontrado' });
+    res.status(404).json({ message: 'Produto não encontrado' });
   }
 });
 

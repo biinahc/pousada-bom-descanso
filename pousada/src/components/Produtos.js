@@ -30,12 +30,12 @@ export default function Produtos(onAdmin) {
         id: null,
         tipo_producto: null,
         nome: '',
-        quantidade: '',
-        quantidade_minima: '',
+        quantidade: '0',
+        quantidade_minima: '0',
         lt_kl_unid: '',
         marca: '',
-        saida: '',
-        status: ''
+        saida: '0',
+        status: '0'
     };
 
 
@@ -118,6 +118,7 @@ export default function Produtos(onAdmin) {
                         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Item Atualizado', life: 3000 });
                     })
                     .catch(error => {
+                        toast.current.show({severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000});
                         console.log(error);
                     });
 
@@ -130,6 +131,7 @@ export default function Produtos(onAdmin) {
                         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Item criado !!', life: 3000 });
                     })
                     .catch(error => {
+                        toast.current.show({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000});
                         console.log(error);
                     });
 
@@ -256,12 +258,16 @@ export default function Produtos(onAdmin) {
 
 
         setProduct(_product);
-
-
-
     };
 
-
+    const onInputNumberChange = (e, name) => {
+        const newValue = (e.target && e.target.value) || '';
+        if(newValue >= 0 || newValue === '') {
+            let _product = { ...product };
+            _product[`${name}`] = newValue;        
+            setProduct(_product);
+        }
+    }
 
     const leftToolbarTemplate = () => {
         return (
@@ -335,7 +341,7 @@ export default function Produtos(onAdmin) {
         <React.Fragment>
             <Button label="Cancelar" className="btn btn-outline-danger btn-sm" icon="pi pi-times" outlined onClick={hideDialog} />
             &nbsp;
-            <Button label="Salvar" className="btn btn-outline-success btn-sm" icon="pi pi-check" onClick={saveSaida} />
+            <Button label="Salvar" className="btn btn-outline-success btn-sm" icon="pi pi-check" disabled={product.saida > product.status || product.saida === ''} onClick={saveSaida} />
         </React.Fragment>
     );
     const deleteProductDialogFooter = (
@@ -380,7 +386,7 @@ export default function Produtos(onAdmin) {
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} produtos" globalFilter={globalFilter} header={header} resizableColumns showGridlines>
                         <Column selectionMode="multiple" exportable={false}></Column>
-                        <Column field="id" header="#" sortable style={{ minWidth: '3rem' }}></Column>
+                        <Column body={(rowData, {rowIndex}) => rowIndex + 1} header="#" sortable style={{minWidth: '3rem'}}></Column>
                         <Column field="tipo_producto" header="Tipo de Produto" sortable style={{ minWidth: '6rem' }}></Column>
                         <Column field="nome" header="Nome" sortable style={{ minWidth: '6rem' }}></Column>
                         <Column field="quantidade" header="Quant." sortable style={{ minWidth: '100px' }}></Column>
@@ -436,7 +442,7 @@ export default function Produtos(onAdmin) {
                         <><label htmlFor="quantidade" className="font-bold">
                             Quantidade em estoque:
                         </label>
-                            <InputText type="number" id="quantidade" value={product.quantidade} onChange={(e) => onInputChange(e, 'quantidade')} rows={2} cols={20} className={classNames({ 'p-invalid': submitted && !product.quantidade })} />
+                            <InputText type="number" id="quantidade" value={product.quantidade} min={0} onChange={(e) => onInputNumberChange(e, 'quantidade')} rows={2} cols={20} className={classNames({ 'p-invalid': submitted && !product.quantidade })} />
                             {submitted && !product.quantidade && <small className="p-error">Campo é obrigatório.</small>}
                         </>
                     }
@@ -448,7 +454,7 @@ export default function Produtos(onAdmin) {
                     <label htmlFor="quantidade_minima" className="font-bold">
                         Quantidade para gerar alerta de baixo estoque:
                     </label>
-                    <InputText type="number" id="quantidade_minima" value={product.quantidade_minima} onChange={(e) => onInputChange(e, 'quantidade_minima')} equired rows={2} cols={20} className={classNames({ 'p-invalid': submitted && !product.quantidade_minima })} />
+                    <InputText type="number" id="quantidade_minima" value={product.quantidade_minima} min={0} onChange={(e) => onInputNumberChange(e, 'quantidade_minima')} equired rows={2} cols={20} className={classNames({ 'p-invalid': submitted && !product.quantidade_minima })} />
                     {submitted && !product.quantidade_minima && <small className="p-error">Campo é obrigatório.</small>}
 
 
@@ -525,7 +531,7 @@ export default function Produtos(onAdmin) {
                     <label htmlFor="name" className="font-bold">
                         Quantidade de Saída:
                     </label>
-                    <InputText type="number" id="saida" onChange={(e) => onInputChange(e, 'saida')} required autoFocus />
+                    <InputText type="number" id="saida" min={0} onChange={(e) => onInputNumberChange(e, 'saida')} required autoFocus />
                     {product.saida > product.status ?
                         <small className="p-error pi pi-exclamation-triangle mr-3"> Não há quantidade sufuciente para saída! </small>
 
