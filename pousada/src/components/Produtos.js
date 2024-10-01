@@ -114,7 +114,7 @@ export default function Produtos() {
             let _products = [...products];
             let _product = { ...product };
             if (product.id && product.status < 0 || product.quantidade_minima < 0 ) {
-                toast.current.show({ severity: 'warn', summary: 'Observação', detail: 'Não use quantidades negativas', life: 4000 });
+                toast.current.show({ severity: 'error', summary: 'Error', detail: 'Não use quantidades negativas', life: 4000 });
                
               
                  }else if (product.id && product.status >= 0 && product.quantidade_minima >= 0  ) {   
@@ -135,7 +135,7 @@ export default function Produtos() {
                             }else{
                              
                                 if (product.quantidade < 0 || product.quantidade_minima < 0 ) {
-                                    toast.current.show({ severity: 'warn', summary: 'Observação', detail: 'Não use quantidades negativas', life: 4000 });  
+                                    toast.current.show({ severity: 'error', summary: 'Error', detail: 'Não use quantidades negativas', life: 4000 });  
 
                                 }else{
 
@@ -174,7 +174,7 @@ export default function Produtos() {
 
 
         if (product.nova_saida < 0) {
-             toast.current.show({ severity: 'warn', summary: 'Observação', detail: 'Não use quantidades negativas', life: 4000 });
+             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Não use quantidades negativas', life: 4000 });
  
          } else {
 
