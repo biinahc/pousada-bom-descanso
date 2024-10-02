@@ -5,10 +5,12 @@ const bodyParser = require('body-parser');
 const UserModel = require('./models/users');
 const ProduModel = require('./models/productos');
 const CategoriaModel = require('./models/categorias');
+const SaidaModel = require('./models/saidas');
 const ParametrosModel = require('./models/status_parametros');
 const { Sequelize, DataTypes } = require('sequelize');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+
 
 
 app.use(cors())
@@ -21,6 +23,7 @@ app.get('/', (req, res) => {
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: './projecto.db'
+
 });
 
 
@@ -36,6 +39,7 @@ const users = UserModel(sequelize, DataTypes)
 const produtos = ProduModel(sequelize, DataTypes)
 const categorias = CategoriaModel(sequelize, DataTypes)
 const parametros = ParametrosModel(sequelize, DataTypes)
+const saidas = SaidaModel(sequelize, DataTypes)
 
 
 // Ruta para login
@@ -58,9 +62,17 @@ app.post('/login', async (req, res) => {
 
   }else if(match && user.status === 'Activo' && user.perfil === 'Admin'){
     res.status(200).json({ success: true, message: 'Login com sucesso e Admin' });
+    /*await users.update(
+      { login: 1 }, 
+      { where: { name: name } } 
+    );*/
 
   }else if(match && user.status === 'Activo' && user.perfil === 'Usuario'){
     res.status(202).json({ error: true, message: 'Login feito com sucesso e Usuário' });
+    /*await users.update(
+      { login: 1 }, 
+      { where: { name: name } } 
+    );*/
 
     }else if(match && user.status === 'Inativo'){
     res.status(401).json({ error: true, message: 'Usuário Inativo' });
@@ -306,6 +318,12 @@ app.post('/categorias/buscar', async (req, res) => {
   } catch (error) {
     res.status(500).send('Error during login');
   }
+});
+
+// *************** SAIDAS  *********************************
+app.get('/saidas', async (req, res) => {
+  const saida = await saidas.findAll();
+  res.json(saida);
 });
 
 
